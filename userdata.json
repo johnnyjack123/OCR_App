@@ -1,9 +1,13 @@
 {
   "version": 0.1,
+  "api_renewal": "",
   "users": [
     {
       "username": "joni",
-      "password_hash": "scrypt:32768:8:1$boFE7Q7eSPbXLG28$e29412bbc3cda8400a9cd38eb6b6ddfdee1f85e286d887cc3b104a091953ac588d83caa95ce7dfe0fe8ae0ae65474fbf1eec96bbac563c2a98105bd0e67f9f03"
+      "password_hash": "scrypt:32768:8:1$dWRezEQcjejo7QNK$85dacbb322e9aafdbb4f9cf5f6ca2c40f9bbec50e1fb5c8a1fadb1d42b2bc1ba3a6fe026776893fdbedf9f40e07b2bd4908a1bb9e0a2ef80a07982655f41d9f7",
+      "text_files": [
+        "test.txt"
+      ]
     }
   ]
 }

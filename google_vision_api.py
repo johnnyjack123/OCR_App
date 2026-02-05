@@ -4,6 +4,8 @@ from pathlib import Path
 from PIL import Image
 import requests
 from logger import logger
+from file_handler import save_result
+
 def extract_document_structure(annotation):
     full_text = []
     if annotation:
@@ -75,22 +77,12 @@ def process_worker(in_path):
     corrected_text = verify_text(text)
     return text, corrected_text
 
-def prepare_ocr_process(in_path):
-    quantity_files = 0
-    count = 0
-    if in_path.is_dir():
-        for file in in_path.iterdir():
-            quantity_files = quantity_files + 1
-        for file in in_path.iterdir():
-            if file.is_file():
-                text, corrected_text = process_worker(file)
-                count = count + 1
-        logger.info(f"Process finished. {count} of {quantity_files} files done.")
-    else:
-        text, corrected_text = process_worker(in_path)
-        logger.info(f"Process finished.")
+def prepare_ocr_process(in_path, task_queue):
+    text, corrected_text = process_worker(in_path)
+    logger.info(f"Process finished.")
     result = {
         "raw_text": text,
         "corrected_text": corrected_text 
     }
-    return result
+    save_result(result, task_queue)
+    return

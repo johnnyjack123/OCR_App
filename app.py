@@ -1,15 +1,22 @@
+import global_variables
+from pathlib import Path
+
+UPLOAD_DIR = Path("./uploads")
+TEXT_FILE_DIR = Path("./results")
+global_variables.result_folder_path = TEXT_FILE_DIR
+
+PROJECT_DIR = Path(__file__).resolve().parent
+global_variables.project_dir = PROJECT_DIR
+
 from flask import Flask, request, redirect, url_for, render_template
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
-from file_handler import load_and_migrate, UserStore
+from file_handler import load_and_migrate, UserStore, load_file, read_result
 import argparse
 from admin import add_user_dialog
-from pathlib import Path
 from logger import logger
-
-UPLOAD_DIR = Path("./uploads")
-TEXT_FILE_DIR = Path("./results")
+from ocr_worker import add_ocr_task
 
 # Creates necessary folders to execute script
 def create_folders():
@@ -55,13 +62,41 @@ def login():
         return "Invalid credentials", 401  # check_password_hash vergleicht Plaintext mit Hash [web:81]
     logger.info(f"Login from user: {username}")
     login_user(WebUser(u.username))
-    return redirect(url_for("protected"))
+    return redirect(url_for("dashboard"))
 
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
+@app.route("/dashboard", methods=["GET"])
+@login_required
+def dashboard():
+    username = current_user.get_id()
+    userdata = load_file()
+    file_access = None
+    for user in userdata.users:
+        if user.username == username:
+            file_access = user.text_files
+            break
+
+    if not file_access:
+        logger.error("Username not found.")
+        return render_template("dashboard.html")
+    
+    file_content = []
+
+    for file in file_access:
+        file_content.append(read_result(file))
+
+    return render_template("dashboard.html", file_content=file_content)
+
+@app.route("/add_task", methods=["POST"])
+@login_required
+def add_task():
+    request.form.get("")
+    return redirect(url_for("dashboard"))
 
 @app.route("/protected")
 @login_required
@@ -71,18 +106,18 @@ def protected():
 @app.route("/upload", methods=["POST"])
 @login_required
 def upload():
-    if "image" not in request.files:
-        return "No file part", 400
+    username = current_user.get_id()
 
-    f = request.files["image"]
-    if f.filename == "":
-        return "No selected file", 400
+    files = request.files.getlist("files")
+    if not files:
+        return "No files", 400
 
-    filename = secure_filename(f.filename)  # niemals ungeprüfte Dateinamen nutzen [web:157]
-    save_path = UPLOAD_DIR / filename
-    f.save(save_path)  # speichert auf disk [web:157]
-
-    return f"Saved as {save_path.name}", 200
+    for file in files:
+        filename = secure_filename(file)  # niemals ungeprüfte Dateinamen nutzen [web:157]
+        save_path = UPLOAD_DIR / filename
+        file.save(save_path)  # speichert auf disk [web:157]
+        add_ocr_task(username, filename)
+    return redirect(url_for("dashboard"))
 
 def parse_arguments():
     parser = argparse.ArgumentParser()

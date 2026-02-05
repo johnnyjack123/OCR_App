@@ -1,0 +1,3 @@
+2026-02-05 21:25:40 - INFO -  app.py:59 - Login from user: joni
+2026-02-05 21:25:40 - ERROR -  app.py:81 - Username not found.
+2026-02-05 21:27:06 - ERROR -  app.py:81 - Username not found.

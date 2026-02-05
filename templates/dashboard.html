@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="dropzone" style="border:2px dashed #888; padding:20px;">
+        Hier Dateien oder Ordner reinziehen
+    </div>
+
+
+    <button type="button" id="pick">Dateien auswählen…</button>
+    <input id="fileInput" type="file" name="files" multiple accept="image/*" hidden>
+
+    <button type="button" id="pickFolder">Ordner auswählen…</button>
+    <input id="folderInput" type="file" name="files" webkitdirectory multiple hidden>
+
+
+    <script type="module" src="../static/dashboard_script.js"></script>
+</body>
+
+</html>

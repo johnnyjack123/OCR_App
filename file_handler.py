@@ -5,6 +5,9 @@ import json, os, tempfile
 from threading import RLock
 import datetime
 import uuid
+from logger import logger
+import global_variables
+import safe_shutil
 
 file_path = Path("./userdata.json")
 _lock = RLock()
@@ -32,11 +35,11 @@ class UserStore:
 class User(BaseModel):
     username: str = ""
     password_hash: str = ""
-    text_files: list
+    text_files: list = Field(default_factory=list)
 
 class Program(BaseModel):
     version: float = 0.1
-    api_renewal: str
+    api_renewal: str = ""
     users: list[User] = Field(default_factory=list)
 
 def atomic_write_text(text: str, encoding: str = "utf-8") -> None:
@@ -95,3 +98,30 @@ def create_result_file(final_file):
     path = Path(f"{id_str}.txt")
     path.write_text(final_file, encoding="utf-8")
     return id_str
+
+def save_result(result, task_queue):
+    final_file = f"Corrected Output: \n \n {result['corrected_text']} \n \n Raw OCR Output: \n \n {result['raw_text']}"
+    file_name = create_result_file(final_file)
+    userdata = load_file()
+    for user in userdata.users:
+        if user.username == task_queue["username"]:
+            user.text_files.append(file_name)
+            save_file(userdata)
+            delete_image(task_queue["file_path_img"])
+            return
+    logger.error("User not found.")
+    return
+
+def delete_image(image):
+    #safe_shutil.remove(image)
+    #TODO: Einkommentieren    
+    return
+
+def read_result(file_name):
+    text = ""
+    folder_path = global_variables.result_folder_path
+    file_path = folder_path / file_name
+    with Path(file_path).open("r", encoding="utf-8") as f:
+        for line in f:
+            text = text + line.rstrip("\n")
+    return text
