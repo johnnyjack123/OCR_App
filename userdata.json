@@ -1,0 +1,9 @@
+{
+  "version": 0.1,
+  "users": [
+    {
+      "username": "joni",
+      "password_hash": "scrypt:32768:8:1$boFE7Q7eSPbXLG28$e29412bbc3cda8400a9cd38eb6b6ddfdee1f85e286d887cc3b104a091953ac588d83caa95ce7dfe0fe8ae0ae65474fbf1eec96bbac563c2a98105bd0e67f9f03"
+    }
+  ]
+}

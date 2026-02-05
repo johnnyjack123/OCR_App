@@ -3,7 +3,7 @@ import argparse
 from pathlib import Path
 from PIL import Image
 import requests
-
+from logger import logger
 def extract_document_structure(annotation):
     full_text = []
     if annotation:
@@ -68,27 +68,14 @@ def verify_text(text): # Correct text with large language modell provided by LM 
     corrected = correct_with_lm(text)
     return corrected
 
-def process_worker(in_path, out_dir):
+def process_worker(in_path):
     print(f"Performing OCR on document {in_path} to extract content.")
     text = simple_ocr_google(str(in_path))
     print("Trying to verify and correct text with generative AI.")
     corrected_text = verify_text(text)
-    out_file = out_dir / f"{in_path.stem}.txt"
-    out_file.write_text(corrected_text, encoding="utf-8")
+    return text, corrected_text
 
-def grab_arguments():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("input")
-    parser.add_argument("-o", "--out", default="gvision_out")
-    args = parser.parse_args()
-
-    in_path = Path(args.input)
-    out_dir = Path(args.out)
-    out_dir.mkdir(exist_ok=True)
-    return in_path, out_dir
-
-def prepare_ocr_process():
-    in_path, out_dir = grab_arguments()
+def prepare_ocr_process(in_path):
     quantity_files = 0
     count = 0
     if in_path.is_dir():
@@ -96,12 +83,14 @@ def prepare_ocr_process():
             quantity_files = quantity_files + 1
         for file in in_path.iterdir():
             if file.is_file():
-                process_worker(file, out_dir)
+                text, corrected_text = process_worker(file)
                 count = count + 1
-        print(f"Process finished. Your text files are saved in {out_dir}. {count} of {quantity_files} files done.")
+        logger.info(f"Process finished. {count} of {quantity_files} files done.")
     else:
-        process_worker(in_path, out_dir)
-        print(f"Process finished. Your text file is saved in {out_dir}")
-
-if __name__ == "__main__":
-    prepare_ocr_process()
+        text, corrected_text = process_worker(in_path)
+        logger.info(f"Process finished.")
+    result = {
+        "raw_text": text,
+        "corrected_text": corrected_text 
+    }
+    return result
