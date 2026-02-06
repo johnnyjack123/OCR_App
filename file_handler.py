@@ -40,6 +40,9 @@ class User(BaseModel):
 class Program(BaseModel):
     version: float = 0.1
     api_renewal: str = ""
+    cookie_key: str = ""
+    llm_model: str = ""
+    debug_mode: bool = False
     users: list[User] = Field(default_factory=list)
 
 def atomic_write_text(text: str, encoding: str = "utf-8") -> None:
@@ -92,22 +95,25 @@ def add_user(userdata: dict) -> None:
         p.users.append(User(**userdata))
         save_file(p)
 
+# Creates and saves result .txt file
 def create_result_file(final_file):
-    id_obj = uuid.uuid4()     # UUID-Objekt
-    id_str = str(id_obj)
-    path = Path(f"{id_str}.txt")
-    path.write_text(final_file, encoding="utf-8")
-    return id_str
+    file_name = str(uuid.uuid4())
+    file_path = Path(global_variables.result_folder_path) / f"{file_name}.txt"
+    #path = Path(f"{id_str}.txt")
+    file_path.write_text(final_file, encoding="utf-8")
+    return file_name
 
-def save_result(result, task_queue):
+def save_result(result, task):
+    print("Save result.")
     final_file = f"Corrected Output: \n \n {result['corrected_text']} \n \n Raw OCR Output: \n \n {result['raw_text']}"
     file_name = create_result_file(final_file)
     userdata = load_file()
     for user in userdata.users:
-        if user.username == task_queue["username"]:
+        if user.username == task["username"]:
+            print("User found.")
             user.text_files.append(file_name)
             save_file(userdata)
-            delete_image(task_queue["file_path_img"])
+            delete_image(task["file_path_img"])
             return
     logger.error("User not found.")
     return
@@ -119,8 +125,8 @@ def delete_image(image):
 
 def read_result(file_name):
     text = ""
-    folder_path = global_variables.result_folder_path
-    file_path = folder_path / file_name
+    folder_path = Path(global_variables.result_folder_path)
+    file_path = folder_path / f"{file_name}.txt"
     with Path(file_path).open("r", encoding="utf-8") as f:
         for line in f:
             text = text + line.rstrip("\n")

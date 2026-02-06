@@ -1,3 +1,43 @@
 2026-02-05 21:25:40 - INFO -  app.py:59 - Login from user: joni
 2026-02-05 21:25:40 - ERROR -  app.py:81 - Username not found.
 2026-02-05 21:27:06 - ERROR -  app.py:81 - Username not found.
+2026-02-06 21:08:36 - INFO -  app.py:63 - Login from user: joni
+2026-02-06 21:08:54 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:13:45 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:15:16 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:15:21 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:16:01 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:18:03 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:18:07 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:19:27 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:19:31 - ERROR -  app.py:85 - Username not found.
+2026-02-06 21:21:55 - ERROR -  app.py:87 - Username not found.
+2026-02-06 21:21:59 - ERROR -  app.py:87 - Username not found.
+2026-02-06 21:31:41 - INFO -  ocr_worker.py:13 - Task: {'username': 'joni', 'file_path_img': 'S0_Biologie_Lehre_des_Lebens.jpg'}
+2026-02-06 21:36:59 - INFO -  ocr_worker.py:12 - Task: {'username': 'joni', 'file_path_img': 'S0_Biologie_Lehre_des_Lebens.jpg'}
+2026-02-06 21:38:22 - INFO -  ocr_worker.py:12 - Task: {'username': 'joni', 'file_path_img': 'S0_Biologie_Lehre_des_Lebens.jpg'}
+2026-02-06 21:39:32 - INFO -  ocr_worker.py:12 - Task: {'username': 'joni', 'file_path_img': 'S0_Biologie_Lehre_des_Lebens.jpg'}
+2026-02-06 21:45:30 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 21:46:06 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 21:46:54 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 21:46:54 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-06 21:50:33 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 21:50:33 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-06 21:54:35 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 21:54:35 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-06 21:54:57 - INFO -  google_vision_api.py:87 - Process finished.
+2026-02-06 21:57:52 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 21:57:52 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-06 21:58:11 - INFO -  google_vision_api.py:87 - Process finished.
+2026-02-06 22:00:58 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 22:00:58 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-06 22:01:10 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 22:01:10 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-06 22:01:18 - INFO -  google_vision_api.py:88 - Process finished.
+2026-02-06 22:01:25 - INFO -  google_vision_api.py:88 - Process finished.
+2026-02-06 22:05:46 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 22:05:46 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-06 22:06:07 - INFO -  google_vision_api.py:88 - Process finished.
+2026-02-06 22:13:19 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-06 22:13:19 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-06 22:13:40 - INFO -  google_vision_api.py:88 - Process finished.

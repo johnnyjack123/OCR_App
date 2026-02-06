@@ -4,19 +4,24 @@ from pathlib import Path
 UPLOAD_DIR = Path("./uploads")
 TEXT_FILE_DIR = Path("./results")
 global_variables.result_folder_path = TEXT_FILE_DIR
+global_variables.upload_folder_path = UPLOAD_DIR
 
 PROJECT_DIR = Path(__file__).resolve().parent
 global_variables.project_dir = PROJECT_DIR
 
 from flask import Flask, request, redirect, url_for, render_template
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_socketio import SocketIO, emit
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from file_handler import load_and_migrate, UserStore, load_file, read_result
+from sockets.app_factory import create_app
+from sockets.extensions import socketio
 import argparse
 from admin import add_user_dialog
 from logger import logger
-from ocr_worker import add_ocr_task
+from ocr_worker import add_ocr_task, start_worker
+from sockets.sockets import socketio_push
 
 # Creates necessary folders to execute script
 def create_folders():
@@ -25,8 +30,9 @@ def create_folders():
 
 store = UserStore("./userdata.json")  # aus deinem Code
 
-app = Flask(__name__)
+app = create_app()
 app.config["SECRET_KEY"] = "BITTE_HIER_EINEN_LANGEN_RANDOM_SECRET_SETZEN"  # nötig für Sessions [web:80]
+socketio = SocketIO(app, async_mode="threading", cors_allowed_origins="*")  # für Tests ok
 
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
@@ -73,23 +79,27 @@ def logout():
 @app.route("/dashboard", methods=["GET"])
 @login_required
 def dashboard():
+    exists = False
     username = current_user.get_id()
     userdata = load_file()
     file_access = None
     for user in userdata.users:
         if user.username == username:
+            exists = True
+            print("User found.")
             file_access = user.text_files
             break
 
-    if not file_access:
+    if not exists:
         logger.error("Username not found.")
         return render_template("dashboard.html")
     
     file_content = []
 
-    for file in file_access:
-        file_content.append(read_result(file))
-
+    if file_access:
+        for file in file_access:
+            file_content.append(read_result(file))
+    socketio_push("test", "test")
     return render_template("dashboard.html", file_content=file_content)
 
 @app.route("/add_task", methods=["POST"])
@@ -113,9 +123,10 @@ def upload():
         return "No files", 400
 
     for file in files:
-        filename = secure_filename(file)  # niemals ungeprüfte Dateinamen nutzen [web:157]
+        filename = secure_filename(file.filename)  # niemals ungeprüfte Dateinamen nutzen [web:157]
         save_path = UPLOAD_DIR / filename
         file.save(save_path)  # speichert auf disk [web:157]
+        print("Received Image.")
         add_ocr_task(username, filename)
     return redirect(url_for("dashboard"))
 
@@ -133,7 +144,11 @@ if __name__ == '__main__':
     create_folders()
     parse_arguments()
     load_and_migrate()
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    start_worker()
+    file = load_file()
+    debug_mode = file.debug_mode
+    socketio.run(app, host="0.0.0.0", port=5000, debug=debug_mode)
 
 
 
+# TODO: machen, dass wenn Datei nicht gefunden wird, nicht gesamter Server hängt, sondern nur in Browser angezeigt wird

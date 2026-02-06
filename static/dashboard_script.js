@@ -1,24 +1,44 @@
 
-function addEventListeners() {
-    document.getElementById("pick").addEventListener("click", () => {
-        document.getElementById("fileInput").click();
+function setupUpload() {
+  const pick = document.getElementById("pick");
+  const fileInput = document.getElementById("fileInput");
+  const dz = document.getElementById("dropzone");
 
-        const dz = document.getElementById("dropzone");
+  pick.addEventListener("click", () => {
+    fileInput.click();
+  });
 
-        dz.addEventListener("dragover", (e) => e.preventDefault());
-        dz.addEventListener("drop", async (e) => {
-            e.preventDefault();
+  fileInput.addEventListener("change", async () => {
+    const files = Array.from(fileInput.files);
+    const form = new FormData();
+    for (const f of files) form.append("files", f);
+    await fetch("/upload", { method: "POST", body: form });
+  });
 
-            // Einfachster Fall: Files-Liste (funktioniert für normale Files)
-            const files = Array.from(e.dataTransfer.files);
+  dz.addEventListener("dragover", (e) => {
+    e.preventDefault(); // muss sein, sonst kein drop [web:479]
+  });
 
-            const form = new FormData();
-            for (const f of files) form.append("files", f);
+  dz.addEventListener("drop", async (e) => {
+    e.preventDefault(); // verhindert "Datei öffnen" [web:474]
+    const files = Array.from(e.dataTransfer.files);
 
-            await fetch("/upload", { method: "POST", body: form });
-        });
+    const form = new FormData();
+    for (const f of files) form.append("files", f);
 
-    });
+    const res = await fetch("/upload", { method: "POST", body: form });
+    if (!res.ok) console.error(await res.text());
+  });
 }
 
-addEventListeners();
+setupUpload();
+
+socket.on("ws_ready", (msg) => console.log("ws_ready", msg));
+  socket.on("ocr_progress", (msg) => {
+    console.log("ocr_progress", msg);
+    // hier UI updaten
+  });
+
+socket.on("test", msg =>{
+    console.log(msg)
+})
