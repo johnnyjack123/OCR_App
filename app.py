@@ -9,15 +9,17 @@ global_variables.upload_folder_path = UPLOAD_DIR
 PROJECT_DIR = Path(__file__).resolve().parent
 global_variables.project_dir = PROJECT_DIR
 
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, send_file, abort
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_socketio import SocketIO, emit
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
-from utils.file_handler import load_and_migrate, UserStore, load_file, read_result, delete_result_file, save_file
+from utils.file_handler import load_and_migrate, UserStore, load_file, read_result, delete_result_file, save_file, edit_result
+from utils.check_env_variables import check_env_variables
 from sockets.app_factory import create_app
 from sockets.extensions import socketio
 import argparse
+from io import BytesIO
 from admin import add_user_dialog
 from utils.logger import logger
 from ocr_worker import add_ocr_task, start_worker
@@ -145,14 +147,54 @@ def upload():
         add_ocr_task(username, filename)
     return redirect(url_for("dashboard"))
 
+@app.route("/download/<path:filename>")
+@login_required
+def download(filename):
+    result_file = read_result(filename)
+    
+    buf = BytesIO(result_file["content"].encode("utf-8"))
+    buf.seek(0)  # wichtig, damit ab Anfang gelesen wird [web:38]
+
+    title = result_file["title"]
+
+    try:
+        return send_file(
+                buf,
+                as_attachment=True,                 # Browser soll downloaden [web:38]
+                download_name=f"{title}.txt",         # Dateiname beim Client (Flask >= 2.0)
+                mimetype="text/plain; charset=utf-8"
+        )
+    except FileNotFoundError:
+        abort(404)
+
+@app.route("/change_name", methods=["POST"])
+@login_required
+def change_name():
+    logger.info("Change name.")
+    username = current_user.get_id()
+    data = request.get_json(silent=True) or {}
+    filename = data["filename"]
+    new_title = data["new_title"]
+    result_file = read_result(filename)
+    result_file["title"] = new_title
+    edit_result(filename, result_file)
+    send_document_history(username)
+    return redirect(url_for("dashboard"))
+
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--add_user", action="store_true",
+                        help="Add user")
+    parser.add_argument("--check_env_variables", action="store_true",
                         help="Add user")
     args = parser.parse_args()
 
     if args.add_user:
         add_user_dialog()
+        return
+    
+    if args.check_env_variables:
+        check_env_variables()
         return
 
 if __name__ == '__main__':
@@ -167,3 +209,5 @@ if __name__ == '__main__':
 
 
 # TODO: machen, dass wenn Datei nicht gefunden wird, nicht gesamter Server hängt, sondern nur in Browser angezeigt wird
+# TODO: Dateinamen ändern
+# TODO: bevorzugter Dateidownload von txt oder md Datein

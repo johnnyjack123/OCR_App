@@ -8,7 +8,9 @@
     {
       "username": "joni",
       "password_hash": "scrypt:32768:8:1$dWRezEQcjejo7QNK$85dacbb322e9aafdbb4f9cf5f6ca2c40f9bbec50e1fb5c8a1fadb1d42b2bc1ba3a6fe026776893fdbedf9f40e07b2bd4908a1bb9e0a2ef80a07982655f41d9f7",
-      "text_files": []
+      "text_files": [
+        "f54dea1b-0b4c-43f2-9d77-1dcd5622c965"
+      ]
     }
   ]
 }

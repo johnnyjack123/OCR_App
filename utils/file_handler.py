@@ -124,6 +124,15 @@ def read_result(file_name):
     file_path = folder_path / f"{file_name}.json"
     return json.loads(file_path.read_text(encoding="utf-8"))
 
+def edit_result(file_name, content):
+    folder_path = Path(global_variables.result_folder_path)
+    file_path = folder_path / f"{file_name}.json"
+
+    json_text = json.dumps(content, ensure_ascii=False, indent=2)
+
+    file_path.write_text(json_text, encoding="utf-8")
+    return
+
 def delete_image(image):
     safe_shutil.remove(image)
     return

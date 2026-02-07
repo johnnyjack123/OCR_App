@@ -38,43 +38,78 @@ function cleanUpMarkdown(text) {
   return text.replace(/^\s*-\s*$/gm, "\\-");
 }
 
-function documentView(text) {
+async function changeDocumentName(old_title, new_title, filename) {
+  if (old_title === new_title || new_title === "") return;
+  const res = await fetch("/change_name", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ "filename": filename, "new_title": new_title }),
+  });
+
+  if (!res.ok) throw new Error(await res.text());
+}
+
+function documentView(content, title, filename) {
   const preview = document.getElementById("preview");
-  const popupPreview = document.getElementById("popupPreview")
-  const closePopupPreview = document.getElementById("closePopupPreview")
-  //fileContent.style = "display: block";
+  const popupPreview = document.getElementById("popupPreview");
+  const closePopupPreview = document.getElementById("closePopupPreview");
+  const input = document.getElementById("title");
+
+  input.value = title
+
+  closePopupPreview.onclick = async () => {
+    try {
+      await changeDocumentName(title, input.value, filename);
+    } catch (e) {
+      console.error(e);
+    }
+    popupPreview.close();
+  };
+
   marked.setOptions({ breaks: true });
-  const new_text = cleanUpMarkdown(text);
-  preview.innerHTML = marked.parse(new_text);
-  closePopupPreview.addEventListener("click", () => popupPreview.close());
+  const new_content = cleanUpMarkdown(content);
+  preview.innerHTML = marked.parse(new_content);
 
   popupPreview.showModal();
 }
 
-function fillDocumentHistoryList(filename, content, title) {
-  const li = document.createElement("li");
-
+function add_view_button(title, content, filename) {
   const btn = document.createElement("button");
   btn.type = "button";
   btn.textContent = title;
 
   btn.addEventListener("click", () => {
-    documentView(content.content)
+    documentView(content.content, title, filename)
+  });
+  return btn;
+}
+
+function add_download_button(filename) {
+  const downloadBtn = document.createElement("button");
+  downloadBtn.textContent = "Download";
+
+  downloadBtn.addEventListener("click", () => {
+    // filename sicher encoden, dann GET-Download starten
+    const url = `/download/${encodeURIComponent(filename)}`;
+    window.location.href = url; // triggert Download ganz normal
   });
 
-  li.appendChild(btn);
+  return downloadBtn;
+}
 
+function add_delete_button() {
   const deleteBtn = document.createElement("button");
-  const confirmDelete = document.getElementById("confirmDelete");
-  const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-  const abortConfirmDeleteBtn = document.getElementById("abortConfirmDeleteBtn");
-
   deleteBtn.textContent = "Delete"
   deleteBtn.addEventListener("click", () => {
     confirmDelete.showModal();
   });
+  return deleteBtn;
+}
 
-  li.appendChild(deleteBtn);
+function fill_delete_modal(filename) {
+  const confirmDelete = document.getElementById("confirmDelete");
+  const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+  const abortConfirmDeleteBtn = document.getElementById("abortConfirmDeleteBtn");
 
   confirmDeleteBtn.addEventListener("click", async () => {
     const res = await fetch("/delete_document", {
@@ -87,6 +122,25 @@ function fillDocumentHistoryList(filename, content, title) {
   });
 
   abortConfirmDeleteBtn.addEventListener("click", () => confirmDelete.close());
+}
+
+function fillDocumentHistoryList(filename, content, title) {
+  const li = document.createElement("li");
+
+  const view_btn = add_view_button(title, content, filename);
+
+  li.appendChild(view_btn);
+
+  const downloadBtn = add_download_button(filename)
+
+  li.appendChild(downloadBtn)
+
+  const deleteBtn = add_delete_button();
+
+  li.appendChild(deleteBtn);
+
+  fill_delete_modal(filename)
+
   return li;
 }
 

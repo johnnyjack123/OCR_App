@@ -178,3 +178,17 @@ I recognized the language as German. I corrected the mistakes and added missing 
 2026-02-07 22:29:09 - INFO -  google_vision_api.py:101 - Process finished.
 2026-02-07 22:29:09 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
 2026-02-07 22:29:15 - INFO -  safe_shutil.py:49 - Remove file results\b4b01826-466f-4289-a0c7-333e8eef953f.json
+2026-02-07 22:31:34 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 22:31:34 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 22:31:46 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis Tag 2\nJede Zelle besteht aus vielen kleinen Bestand-\nteilen, die ähnlich wie beim Menschen als\n"Organe" der Zelle fungieren. Ohne diese\nOrgane wäre die Zelle nicht lebensfähig.\nDie Organe versorgen die Zelle mit\nSauerstoff (Mitochondrien, Chloroplasten) und\nNährstoffen. Jede Zelle besitzt noch einen\nZellkern, welcher für die Fortpflanzung\nund den Tod der Zelle verantwortlich ist.\nDer Zellkern ist das Gehirn der Zelle.\nZellen sind also ein lebender Organismus\nmit einem Stoffwechsel.'}
+2026-02-07 22:31:46 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 22:31:46 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
+2026-02-07 22:31:53 - INFO -  safe_shutil.py:49 - Remove file results\3718d88d-d388-446c-ad52-4c59b842aa12.json
+2026-02-07 23:11:44 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 23:11:44 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 23:11:53 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis Tag 2\nJede Zelle besteht aus vielen kleinen Bestand-\nteilen, die ähnlich wie beim Menschen als\n"Organe" der Zelle fungieren. Ohne diese\nOrgane wäre die Zelle nicht lebensfähig.\nDie Organe versorgen die Zelle mit\nSauerstoff (Mitochondrien, Chloroplasten) und\nNährstoffen. Jede Zelle besitzt noch einen\nZellkern, welcher für die Fortpflanzung\nund den Tod der Zelle verantwortlich ist.\nDer Zellkern ist das Gehirn der Zelle.\nZellen sind also ein lebender Organismus\nmit einem Stoffwechsel.'}
+2026-02-07 23:11:53 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 23:11:53 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
+2026-02-07 23:18:56 - INFO -  app.py:72 - Login from user: joni
+2026-02-08 00:02:54 - INFO -  app.py:173 - Change name.
+2026-02-08 00:05:07 - INFO -  app.py:173 - Change name.
