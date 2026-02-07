@@ -21,6 +21,7 @@
     <input id="folderInput" type="file" name="files" webkitdirectory multiple hidden>
 
     <ul id="documentHistory"></ul>
+    <button id="viewSettings">Settings</button>
 
     <dialog id="popupPreview">
         <input id="title" type="text" placeholder="Name of this document." />
@@ -34,6 +35,15 @@
         <button id="confirmDeleteBtn">Delete</button>
 
         <button id="abortConfirmDeleteBtn">Abort</button>
+    </dialog>
+
+    <dialog id="settings">
+        <input id="password" type="text" placeholder="Change your password" />
+        <input id="confirmPassword" type="text" placeholder="Confirm your password" />
+        <div id="passwordMessage" style="color: #c00;"></div>
+        <select id="preferedFile"></select>
+        <button id="saveSettings">Save</button>
+        <button id="closeSettings">Close</button>
     </dialog>
 
     <script type="module" src="../static/dashboard_script.js"></script>

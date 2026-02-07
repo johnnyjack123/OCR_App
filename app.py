@@ -206,8 +206,5 @@ if __name__ == '__main__':
     debug_mode = file.debug_mode
     socketio.run(app, host="0.0.0.0", port=5000, debug=debug_mode)
 
-
-
 # TODO: machen, dass wenn Datei nicht gefunden wird, nicht gesamter Server hängt, sondern nur in Browser angezeigt wird
-# TODO: Dateinamen ändern
 # TODO: bevorzugter Dateidownload von txt oder md Datein

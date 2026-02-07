@@ -163,6 +163,77 @@ function createDocumentHistory(history) {
   }
 }
 
+function validateMatch() {
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+  const passwordMessage = document.getElementById("passwordMessage");
+
+  const a = password.value;
+  const b = confirmPassword.value;
+
+  if (a && b && a !== b) {
+    confirmPassword.setCustomValidity("Passwörter stimmen nicht überein."); // macht Feld invalid [web:108]
+    passwordMessage.textContent = "Passwörter stimmen nicht überein.";
+  } else {
+    confirmPassword.setCustomValidity(""); // Fehler zurücksetzen [web:108]
+    passwordMessage.textContent = "";
+  }
+}
+
+function validateBothOrNone() {
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+  const passwordMessage = document.getElementById("passwordMessage");
+
+  const a = password.value.trim();
+  const b = confirmPassword.value.trim();
+
+  // entweder beide leer ODER beide gefüllt
+  const ok = (a === "" && b === "") || (a !== "" && b !== "");
+
+  if (!ok) {
+    // du kannst die Meldung auf einem der beiden Felder setzen (oder auf beiden)
+    confirmPassword.setCustomValidity("Bitte beide Felder ausfüllen.");
+    passwordMessage.textContent = "Bitte beide Felder ausfüllen.";
+  } else {
+    confirmPassword.setCustomValidity("");
+    passwordMessage.textContent = "";
+  }
+}
+
+function setupSettings() {
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+  const preferedFile = document.getElementById("preferedFile");
+  const saveSettings = document.getElementById("saveSettings");
+  const closeSettings = document.getElementById("closeSettings")
+
+  saveSettings.addEventListener("click", async () => {
+    const res = await fetch("/save_settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ "password": password, "confirm_password": confirmPassword, "prefered_file": preferedFile }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+  });
+
+  password.addEventListener("input", () => { validateBothOrNone(); validateMatch(); });
+  confirmPassword.addEventListener("input", () => { validateBothOrNone(); validateMatch(); });
+  closeSettings.addEventListener("click", () => {
+    settings.close();
+  });
+}
+
+setupSettings();
+
+function viewSettings(){
+  viewSettings = document.getElementById("viewSettings");
+  viewSettings.addEventListener("click", () => {
+    settings.showModal();
+  });
+}
+
+viewSettings();
 
 //Websockets
 const socket = io({ withCredentials: true });
