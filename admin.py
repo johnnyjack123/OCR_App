@@ -1,4 +1,4 @@
-from file_handler import add_user, load_file
+from utils.file_handler import add_user, load_file
 from werkzeug.security import generate_password_hash
 
 def add_user_dialog():

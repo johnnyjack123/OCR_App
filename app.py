@@ -1,4 +1,4 @@
-import global_variables
+import utils.global_variables as global_variables
 from pathlib import Path
 
 UPLOAD_DIR = Path("./uploads")
@@ -14,12 +14,12 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from flask_socketio import SocketIO, emit
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
-from file_handler import load_and_migrate, UserStore, load_file, read_result
+from utils.file_handler import load_and_migrate, UserStore, load_file, read_result
 from sockets.app_factory import create_app
 from sockets.extensions import socketio
 import argparse
 from admin import add_user_dialog
-from logger import logger
+from utils.logger import logger
 from ocr_worker import add_ocr_task, start_worker
 from sockets.sockets import socketio_push
 
@@ -31,8 +31,9 @@ def create_folders():
 store = UserStore("./userdata.json")  # aus deinem Code
 
 app = create_app()
-app.config["SECRET_KEY"] = "BITTE_HIER_EINEN_LANGEN_RANDOM_SECRET_SETZEN"  # nötig für Sessions [web:80]
-socketio = SocketIO(app, async_mode="threading", cors_allowed_origins="*")  # für Tests ok
+
+#app.config["SECRET_KEY"] = "BITTE_HIER_EINEN_LANGEN_RANDOM_SECRET_SETZEN"  # nötig für Sessions [web:80]
+#socketio = SocketIO(app, async_mode="threading", cors_allowed_origins="*")  # für Tests ok
 
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
@@ -99,7 +100,7 @@ def dashboard():
     if file_access:
         for file in file_access:
             file_content.append(read_result(file))
-    socketio_push("test", "test")
+    socketio_push("test", "test", username)
     return render_template("dashboard.html", file_content=file_content)
 
 @app.route("/add_task", methods=["POST"])
@@ -108,10 +109,12 @@ def add_task():
     request.form.get("")
     return redirect(url_for("dashboard"))
 
-@app.route("/protected")
+@app.route("/delete_document", methods=["POST"])
 @login_required
-def protected():
-    return f"Hi {current_user.get_id()}, du bist eingeloggt."
+def delete_document():
+    file_id = request.get_data(as_text=True)
+    print(f"Filename: {file_id}")
+    return redirect(url_for("dashboard"))
 
 @app.route("/upload", methods=["POST"])
 @login_required

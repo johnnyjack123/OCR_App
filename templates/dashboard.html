@@ -20,8 +20,25 @@
     <button type="button" id="pickFolder">Ordner auswählen…</button>
     <input id="folderInput" type="file" name="files" webkitdirectory multiple hidden>
 
+    <ul id="documentHistory"></ul>
+
+    <dialog id="popupPreview">
+        <div id="preview"></div>
+        <button id="closePopupPreview">Close</button>
+    </dialog>
+
+    <dialog id="confirmDelete">
+        <p>Do you really want to delete this document? This action cannot be undone.</p>
+
+        <button id="confirmDeleteBtn">Delete</button>
+
+        <button id="abortConfirmDeleteBtn">Abort</button>
+    </dialog>
 
     <script type="module" src="../static/dashboard_script.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+
 </body>
 
 </html>

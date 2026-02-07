@@ -41,3 +41,113 @@
 2026-02-06 22:13:19 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
 2026-02-06 22:13:19 - INFO -  google_vision_api.py:44 - Sent OCR request.
 2026-02-06 22:13:40 - INFO -  google_vision_api.py:88 - Process finished.
+2026-02-06 23:15:43 - INFO -  app.py:77 - Login from user: joni
+2026-02-07 12:08:53 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 12:08:53 - INFO -  google_vision_api.py:44 - Sent OCR request.
+2026-02-07 12:09:27 - INFO -  google_vision_api.py:93 - Process finished.
+2026-02-07 12:13:55 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 12:13:55 - INFO -  google_vision_api.py:46 - Sent OCR request.
+2026-02-07 12:15:31 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 12:15:31 - INFO -  google_vision_api.py:46 - Sent OCR request.
+2026-02-07 12:15:50 - INFO -  google_vision_api.py:90 - corrected text: I'll do my best to recognize the language and correct the mistakes.
+
+Please provide the text. I'm ready when you are. 
+
+(Note: I'll assume that the text is in English unless you specify otherwise.)
+2026-02-07 12:16:53 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 12:16:54 - INFO -  google_vision_api.py:46 - Sent OCR request.
+2026-02-07 12:17:22 - INFO -  google_vision_api.py:90 - corrected text: Based on the text, I recognize it as German. Here is the corrected version:
+
+{'title': 'Biologische Grundlagen', 
+'text': 'Biologie: 
+Lehre des Lebens 
+Biochemie 
+Allgemein 
+Cytologie 
+D 
+A 
+- 
+Histologie 
+Cytologie: 
+Lehre der Zelle 
+Biochemie: Lehre der organischen Moleküle 
+Genetik: Lehre der Gene und ihrer Produkte 
+Evolution: Lehre zur Entstehung der Arten 
+Histologie: Lehre der Gewebe (Zellverbände)'}
+
+I corrected the following mistakes:
+
+- "Genelk" -> "Allgemein"
+- "zur Entstening" -> "zur Entstehung"
+- "hence" -> removed, as it's an English word and doesn't make sense in this context
+- Added missing words like "Lehre des Lebens", "Biochemie: Lehre der organischen Moleküle", etc.
+- Corrected punctuation and capitalization.
+2026-02-07 12:20:24 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 12:20:24 - INFO -  google_vision_api.py:46 - Sent OCR request.
+2026-02-07 12:20:48 - INFO -  google_vision_api.py:92 - corrected text: {'title': 'Biologie Lehre', 'text': 'Lehre der Biologie:\nLehre des Lebens\nBiochemie\nGenetik\nCytologie\nDie Lehre der Zelle\nBiochemie: Lehre der organischen Moleküle\nGenetik: Lehre der Gene und ihrer Produkte\nEvolution: Lehre zur Entstehung der Arten\nHistologie: Lehre der Gewebe (Zellverbände)'}
+2026-02-07 12:25:02 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 12:25:02 - INFO -  google_vision_api.py:47 - Sent OCR request.
+2026-02-07 12:25:25 - INFO -  google_vision_api.py:93 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Lehre des Lebens: Biochemie, Genetik, Cytologie, Histologie: Lehre der Zelle, Biochemie: Lehre der organischen Moleküle, Genetike: Lehre der Gene und ihrer Produkte, Evolution: Lehre zur Entstehung der Arten, Histologie: Lehre der Gewebe (Zellverbände).'}
+
+I recognized the language as German. I corrected the mistakes and added missing words to make the text grammatically correct.
+2026-02-07 13:33:29 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 13:33:29 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 13:33:59 - INFO -  google_vision_api.py:94 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Lehre des Lebens: Biochemie, Genetik, Cytologie, Differenzierung und - Histologie: Lehre der Zelle, Biochemie: Lehre der organischen Moleküle, Genetike: Lehre der Gene und ihrer Produkte, Evolution: Lehre zur Entstehung der Arten, Histologie: Lehre der Gewebe (Zellverbände).'}
+
+I recognized the language as German. I corrected the mistakes and added missing words to make the text grammatically correct. The highlighted parts are marked with **, but since there were no unknown words or sentences in this case, they are empty.
+2026-02-07 13:33:59 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 13:36:39 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 13:36:39 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 13:37:15 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Lehre des Lebens: Biochemie, Genetik, Cytologie, Differenzierung der Zelle. Lehre der organischen Moleküle, Genetike: Lehre der Gene und ihrer Produkte, Evolution: Lehre zur Entstehung der Arten, Histologie: Lehre der Gewebe (Zellverbände).'}
+2026-02-07 13:37:15 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 13:40:04 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 13:40:04 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 13:40:34 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Lehre des Lebens: Biochemie, Genetik, Cytologie, Differenzierung der Zelle. Lehre der organischen Moleküle, Genetike: Lehre der Gene und ihrer Produkte, Evolution: Lehre zur Entstehung der Arten, Histologie: Lehre der Gewebe (Zellverbände).'}
+2026-02-07 13:40:34 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 13:43:28 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 13:43:28 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 13:43:54 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Lehre des Lebens: Biochemie, Genetik, Cytologie, Differenzierung der Zelle, Biochemie: Lehre der organischen Moleküle, Genetike: Lehre der Gene und ihrer Produkte, Evolution: Lehre zur Entstehung der Arten, Histologie: Lehre der Gewebe (Zellverbände).'}
+2026-02-07 13:43:54 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 13:46:16 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 13:46:16 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 13:46:51 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 14:02:46 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 14:02:46 - INFO -  google_vision_api.py:49 - Sent OCR request.
+2026-02-07 14:03:17 - INFO -  google_vision_api.py:96 - corrected text: {'title': 'Biologie-Grundbegriffe', 'text': 'Biologie: Lehre des Lebens\n\nBiochemie\nGenetik\nCytologie\n**D A**\nHistologie\n\nCytologie: Lehre der Zelle\nBiochemie: Lehre der organischen Moleküle\nGenetik: Lehre der Gene und ihrer Produkte\nEvolution: Lehre zur Entstehung **neuer** Arten\nHistologie: Lehre der Gewebe (= Zellverbände)'}
+2026-02-07 14:03:17 - INFO -  google_vision_api.py:102 - Process finished.
+2026-02-07 14:29:28 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 14:29:29 - INFO -  google_vision_api.py:49 - Sent OCR request.
+2026-02-07 14:29:43 - INFO -  google_vision_api.py:96 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Biologie:\nLehre des Lebens\nBiochemie\nGenetik\nCytologie\nD\nA\n-\nHistologie\nCytologie: Lehre der Zelle\nBiochemie: Lehre der organischen Moleküle\nGenetik: Lehre der Gene und ihrer Produkte\nEvolution: Lehre zur Entstehung hence Arten\nHistologie: Lehre der Gewebe (= Zellverbände).'}
+2026-02-07 14:29:43 - INFO -  google_vision_api.py:102 - Process finished.
+2026-02-07 14:32:56 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 14:32:56 - INFO -  google_vision_api.py:50 - Sent OCR request.
+2026-02-07 14:33:03 - INFO -  google_vision_api.py:97 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Biologie:\nLehre des Lebens\nBiochemie\nGenetik\nCytologie\nD\nA\n-\nHistologie\nCytologie: Lehre der Zelle\nBiochemie: Lehre der organischen Moleküle\nGenetik: Lehre der Gene und ihrer Produkte\nEvolution: Lehre zur Entstehung hence Arten\nHistologie: Lehre der Gewebe (= Zellverbände).'}
+2026-02-07 14:33:03 - INFO -  google_vision_api.py:103 - Process finished.
+2026-02-07 14:39:15 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 14:40:31 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 14:40:31 - INFO -  google_vision_api.py:50 - Sent OCR request.
+2026-02-07 14:40:44 - INFO -  google_vision_api.py:97 - corrected text: {'title': 'Biologia', 'text': 'Biologie:\nLehre des Lebens\nBiochemie\nGenetik\nCytologie\nD\nA\n-\nHistologie\nCytologie: Lehre der Zelle\nBiochemie: Lehre der organischen Moleküle\nGenetik: Lehre der Gene und ihrer Produkte\nEvolution: Lehre zur Entstehung hence Arten\nHistologie: Lehre der Gewebe (= Zellverbände).'}
+2026-02-07 14:40:44 - INFO -  google_vision_api.py:103 - Process finished.
+2026-02-07 14:42:51 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 14:42:51 - INFO -  google_vision_api.py:50 - Sent OCR request.
+2026-02-07 14:42:57 - INFO -  google_vision_api.py:97 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Biologie:\nLehre des Lebens\nBiochemie\nGenetik\nCytologie\nD\nA\n-\nHistologie\nCytologie: Lehre der Zelle\nBiochemie: Lehre der organischen Moleküle\nGenetik: Lehre der Gene und ihrer Produkte\nEvolution: Lehre zur Entstehung hence Arten\nHistologie: Lehre der Gewebe (= Zellverbände).'}
+2026-02-07 14:42:57 - INFO -  google_vision_api.py:103 - Process finished.
+2026-02-07 14:45:20 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S0_Biologie_Lehre_des_Lebens.jpg')}
+2026-02-07 14:45:20 - INFO -  google_vision_api.py:50 - Sent OCR request.
+2026-02-07 14:45:32 - INFO -  google_vision_api.py:97 - corrected text: {'title': 'Biologie Grundlagen', 'text': 'Biologie:\nLehre des Lebens\nBiochemie\nGenetik\nCytologie\nD\nA\n-\nHistologie\nCytologie: Lehre der Zelle\nBiochemie: Lehre der organischen Moleküle\nGenetik: Lehre der Gene und ihrer Produkte\nEvolution: Lehre zur Entstehung hence Arten\nHistologie: Lehre der Gewebe (= Zellverbände).'}
+2026-02-07 14:45:32 - INFO -  google_vision_api.py:103 - Process finished.
+2026-02-07 16:02:26 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 16:02:26 - INFO -  google_vision_api.py:50 - Sent OCR request.
+2026-02-07 16:02:38 - INFO -  google_vision_api.py:97 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis\nTag 2\n\nJede Zelle besteht aus vielen kleinen Bestandteilen, die ähnlich wie beim Menschen als "Organe" der Zelle fungieren. Ohne diese Organe wäre die Zelle nicht lebensfähig. Die Organe versorgen die Zelle mit Sauerstoff (Mitochondrien, Chloroplasten) und Nährstoffen. Jede Zelle besitzt noch einen Zellkern, welcher für die Fortpflanzung und den Tod der Zelle verantwortlich ist. Der Zellkern ist das Gehirn der Zelle. Zellen sind also ein lebender Organismus mit einem Stoffwechsel.'}
+2026-02-07 16:02:38 - INFO -  google_vision_api.py:103 - Process finished.
+2026-02-07 16:29:17 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 16:29:17 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 16:29:29 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis Tag 2\nJede Zelle besteht aus vielen kleinen Bestand-\nteilen, die ähnlich wie beim Menschen als\n"Organe" der Zelle fungieren. Ohne diese\nOrgane wäre die Zelle nicht lebensfähig.\nDie Organe versorgen die Zelle mit\nSauerstoff (Mitochondrien, Chloroplasten) und\nNährstoffen. Jede Zelle besitzt noch einen\nZellkern, welcher für die Fortpflanzung\nund den Tod der Zelle verantwortlich ist.\nDer Zellkern ist das Gehirn der Zelle.\nZellen sind also ein lebender Organismus\nmit einem Stoffwechsel.'}
+2026-02-07 16:29:29 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 16:29:29 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
+2026-02-07 16:31:09 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 16:31:09 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 16:31:20 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis Tag 2\nJede Zelle besteht aus vielen kleinen Bestand-\nteilen, die ähnlich wie beim Menschen als\n"Organe" der Zelle fungieren. Ohne diese\nOrgane wäre die Zelle nicht lebensfähig.\nDie Organe versorgen die Zelle mit\nSauerstoff (Mitochondrien, Chloroplasten) und\nNährstoffen. Jede Zelle besitzt noch einen\nZellkern, welcher für die Fortpflanzung\nund den Tod der Zelle verantwortlich ist.\nDer Zellkern ist das Gehirn der Zelle.\nZellen sind also ein lebender Organismus\nmit einem Stoffwechsel.'}
+2026-02-07 16:31:20 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 16:31:20 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
+2026-02-07 16:31:20 - ERROR -  safe_shutil.py:14 - Access denied: C:\Users\jonat\Documents\Programmieren\OCR\test.txt is outside project directory.

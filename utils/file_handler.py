@@ -5,9 +5,9 @@ import json, os, tempfile
 from threading import RLock
 import datetime
 import uuid
-from logger import logger
-import global_variables
-import safe_shutil
+from utils.logger import logger
+import utils.global_variables as global_variables
+import utils.safe_shutil as safe_shutil
 
 file_path = Path("./userdata.json")
 _lock = RLock()
@@ -98,36 +98,32 @@ def add_user(userdata: dict) -> None:
 # Creates and saves result .txt file
 def create_result_file(final_file):
     file_name = str(uuid.uuid4())
-    file_path = Path(global_variables.result_folder_path) / f"{file_name}.txt"
-    #path = Path(f"{id_str}.txt")
-    file_path.write_text(final_file, encoding="utf-8")
+    file_path = Path(global_variables.result_folder_path) / f"{file_name}.json"
+
+    json_text = json.dumps(final_file, ensure_ascii=False, indent=2)
+
+    file_path.write_text(json_text, encoding="utf-8")
     return file_name
 
 def save_result(result, task):
-    print("Save result.")
-    final_file = f"Corrected Output: \n \n {result['corrected_text']} \n \n Raw OCR Output: \n \n {result['raw_text']}"
+    final_file = {"title": result["title"],
+                  "content": f"### Corrected Output: \n \n {result['corrected_text']} \n \n ### Raw OCR Output: \n \n {result['raw_text']}"}
     file_name = create_result_file(final_file)
     userdata = load_file()
     for user in userdata.users:
         if user.username == task["username"]:
-            print("User found.")
             user.text_files.append(file_name)
             save_file(userdata)
-            delete_image(task["file_path_img"])
+            delete_image(task["file_path_img"]) #TODO: wird nicht ausgeführt
             return
     logger.error("User not found.")
     return
 
 def delete_image(image):
-    #safe_shutil.remove(image)
-    #TODO: Einkommentieren    
+    safe_shutil.remove(image)
     return
 
 def read_result(file_name):
-    text = ""
     folder_path = Path(global_variables.result_folder_path)
-    file_path = folder_path / f"{file_name}.txt"
-    with Path(file_path).open("r", encoding="utf-8") as f:
-        for line in f:
-            text = text + line.rstrip("\n")
-    return text
+    file_path = folder_path / f"{file_name}.json"
+    return json.loads(file_path.read_text(encoding="utf-8"))

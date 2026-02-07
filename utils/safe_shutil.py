@@ -1,7 +1,7 @@
 from pathlib import Path
 import shutil
-import global_variables
-from logger import logger
+import utils.global_variables as global_variables
+from utils.logger import logger
 import os
 
 project_dir = Path(global_variables.project_dir).resolve()
