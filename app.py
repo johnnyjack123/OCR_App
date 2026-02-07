@@ -14,14 +14,14 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from flask_socketio import SocketIO, emit
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
-from utils.file_handler import load_and_migrate, UserStore, load_file, read_result
+from utils.file_handler import load_and_migrate, UserStore, load_file, read_result, delete_result_file, save_file
 from sockets.app_factory import create_app
 from sockets.extensions import socketio
 import argparse
 from admin import add_user_dialog
 from utils.logger import logger
 from ocr_worker import add_ocr_task, start_worker
-from sockets.sockets import socketio_push
+from sockets.sockets import socketio_push, send_document_history
 
 # Creates necessary folders to execute script
 def create_folders():
@@ -112,8 +112,20 @@ def add_task():
 @app.route("/delete_document", methods=["POST"])
 @login_required
 def delete_document():
-    file_id = request.get_data(as_text=True)
-    print(f"Filename: {file_id}")
+    username = current_user.get_id()
+    file_name = request.get_data(as_text=True).strip()
+    print(f"Filename: {file_name}")
+    file = load_file()
+    for user in file.users:
+        if user.username == username:
+            print("User found.")
+            if file_name in user.text_files:
+               user.text_files.remove(file_name)
+               print("Remove file from json.")
+               save_file(file)
+               break
+    delete_result_file(file_name)
+    send_document_history(username)
     return redirect(url_for("dashboard"))
 
 @app.route("/upload", methods=["POST"])

@@ -119,11 +119,17 @@ def save_result(result, task):
     logger.error("User not found.")
     return
 
-def delete_image(image):
-    safe_shutil.remove(image)
-    return
-
 def read_result(file_name):
     folder_path = Path(global_variables.result_folder_path)
     file_path = folder_path / f"{file_name}.json"
     return json.loads(file_path.read_text(encoding="utf-8"))
+
+def delete_image(image):
+    safe_shutil.remove(image)
+    return
+
+def delete_result_file(file_name):
+    folder_path = Path(global_variables.result_folder_path)
+    file_path = folder_path / f"{file_name}.json"
+    safe_shutil.remove(file_path)
+    return

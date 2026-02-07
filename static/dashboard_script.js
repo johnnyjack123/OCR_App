@@ -51,7 +51,7 @@ function documentView(text) {
   popupPreview.showModal();
 }
 
-function fillDocumentHistoryList(filename, title) {
+function fillDocumentHistoryList(filename, content, title) {
   const li = document.createElement("li");
 
   const btn = document.createElement("button");
@@ -103,7 +103,7 @@ function createDocumentHistory(history) {
     console.log("keys:", content && typeof content === "object" ? Object.keys(content) : typeof content);
     const title = content.title ?? filename;
     console.log("Title: " + title)
-    const li = fillDocumentHistoryList(filename, title);
+    const li = fillDocumentHistoryList(filename, content, title);
 
     ul.appendChild(li);
   }

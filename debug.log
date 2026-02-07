@@ -151,3 +151,30 @@ I recognized the language as German. I corrected the mistakes and added missing 
 2026-02-07 16:31:20 - INFO -  google_vision_api.py:101 - Process finished.
 2026-02-07 16:31:20 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
 2026-02-07 16:31:20 - ERROR -  safe_shutil.py:14 - Access denied: C:\Users\jonat\Documents\Programmieren\OCR\test.txt is outside project directory.
+2026-02-07 22:17:47 - INFO -  safe_shutil.py:49 - Remove file results\c676de6d-5533-40b6-939d-bbae107e956b.json
+2026-02-07 22:17:47 - INFO -  safe_shutil.py:49 - Remove file results\c676de6d-5533-40b6-939d-bbae107e956b.json
+2026-02-07 22:22:13 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 22:22:14 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 22:22:24 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis Tag 2\nJede Zelle besteht aus vielen kleinen Bestand-\nteilen, die ähnlich wie beim Menschen als\n"Organe" der Zelle fungieren. Ohne diese\nOrgane wäre die Zelle nicht lebensfähig.\nDie Organe versorgen die Zelle mit\nSauerstoff (Mitochondrien, Chloroplasten) und\nNährstoffen. Jede Zelle besitzt noch einen\nZellkern, welcher für die Fortpflanzung\nund den Tod der Zelle verantwortlich ist.\nDer Zellkern ist das Gehirn der Zelle.\nZellen sind also ein lebender Organismus\nmit einem Stoffwechsel.'}
+2026-02-07 22:22:24 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 22:22:24 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
+2026-02-07 22:22:40 - INFO -  safe_shutil.py:49 - Remove file results\<built-in method strip of str object at 0x0000022BE68D60D0>.json
+2026-02-07 22:23:38 - INFO -  safe_shutil.py:49 - Remove file results\e7115e90-3714-408a-aca9-b155024814c4.json
+2026-02-07 22:25:30 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 22:25:30 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 22:25:41 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis Tag 2\nJede Zelle besteht aus vielen kleinen Bestand-\nteilen, die ähnlich wie beim Menschen als\n"Organe" der Zelle fungieren. Ohne diese\nOrgane wäre die Zelle nicht lebensfähig.\nDie Organe versorgen die Zelle mit\nSauerstoff (Mitochondrien, Chloroplasten) und\nNährstoffen. Jede Zelle besitzt noch einen\nZellkern, welcher für die Fortpflanzung\nund den Tod der Zelle verantwortlich ist.\nDer Zellkern ist das Gehirn der Zelle.\nZellen sind also ein lebender Organismus\nmit einem Stoffwechsel.'}
+2026-02-07 22:25:41 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 22:25:41 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
+2026-02-07 22:25:46 - INFO -  safe_shutil.py:49 - Remove file results\48aa8284-4bb9-4729-8408-a556d23659aa.json
+2026-02-07 22:27:26 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 22:27:26 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 22:27:37 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis Tag 2\nJede Zelle besteht aus vielen kleinen Bestand-\nteilen, die ähnlich wie beim Menschen als\n"Organe" der Zelle fungieren. Ohne diese\nOrgane wäre die Zelle nicht lebensfähig.\nDie Organe versorgen die Zelle mit\nSauerstoff (Mitochondrien, Chloroplasten) und\nNährstoffen. Jede Zelle besitzt noch einen\nZellkern, welcher für die Fortpflanzung\nund den Tod der Zelle verantwortlich ist.\nDer Zellkern ist das Gehirn der Zelle.\nZellen sind also ein lebender Organismus\nmit einem Stoffwechsel.'}
+2026-02-07 22:27:37 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 22:27:37 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
+2026-02-07 22:27:52 - INFO -  safe_shutil.py:49 - Remove file results\44c6116b-bd7a-4c2e-bc6f-fc0929282071.json
+2026-02-07 22:28:53 - INFO -  ocr_worker.py:14 - Task: {'username': 'joni', 'file_path_img': WindowsPath('uploads/S9_Erkenntnis_Tag_2.jpg')}
+2026-02-07 22:28:53 - INFO -  google_vision_api.py:48 - Sent OCR request.
+2026-02-07 22:29:09 - INFO -  google_vision_api.py:95 - corrected text: {'title': 'Zellstruktur', 'text': 'Erkenntnis Tag 2\nJede Zelle besteht aus vielen kleinen Bestand-\nteilen, die ähnlich wie beim Menschen als\n"Organe" der Zelle fungieren. Ohne diese\nOrgane wäre die Zelle nicht lebensfähig.\nDie Organe versorgen die Zelle mit\nSauerstoff (Mitochondrien, Chloroplasten) und\nNährstoffen. Jede Zelle besitzt noch einen\nZellkern, welcher für die Fortpflanzung\nund den Tod der Zelle verantwortlich ist.\nDer Zellkern ist das Gehirn der Zelle.\nZellen sind also ein lebender Organismus\nmit einem Stoffwechsel.'}
+2026-02-07 22:29:09 - INFO -  google_vision_api.py:101 - Process finished.
+2026-02-07 22:29:09 - INFO -  safe_shutil.py:49 - Remove file uploads\S9_Erkenntnis_Tag_2.jpg
+2026-02-07 22:29:15 - INFO -  safe_shutil.py:49 - Remove file results\b4b01826-466f-4289-a0c7-333e8eef953f.json

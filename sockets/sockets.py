@@ -43,8 +43,8 @@ def send_document_history(username):
         for file in files:
             content = read_result(file)
             file_content.append({file: content})
-        socketio_push("document_history", file_content, username)
+    socketio_push("document_history", file_content, username)
 
 def socketio_push(channel, message, username):
-    print(f"Socketio push to channel {channel} with msg {message}")
+    print(f"Socketio push to channel {channel}")
     socketio.emit(channel, message, to=user_room(username))
