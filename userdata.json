@@ -1,7 +1,7 @@
 {
   "version": 0.1,
   "api_renewal": "",
-  "cookie_key": "",
+  "cookie_key": "UvSpjyGL2vjnSIFgXduQEtJghdg0UdXe",
   "llm_model": "meta-llama-3.1-8b-instruct",
   "debug_mode": false,
   "users": [

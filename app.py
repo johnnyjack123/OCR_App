@@ -21,6 +21,7 @@ from sockets.app_factory import create_app
 from sockets.extensions import socketio
 import argparse
 from io import BytesIO
+
 from admin import add_user_dialog
 from utils.logger import logger
 from ocr_worker import add_ocr_task, start_worker
@@ -34,9 +35,6 @@ def create_folders():
 store = UserStore("./userdata.json")  # aus deinem Code
 
 app = create_app()
-
-#app.config["SECRET_KEY"] = "BITTE_HIER_EINEN_LANGEN_RANDOM_SECRET_SETZEN"  # nötig für Sessions [web:80]
-#socketio = SocketIO(app, async_mode="threading", cors_allowed_origins="*")  # für Tests ok
 
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
@@ -249,6 +247,8 @@ def parse_arguments():
         check_env_variables()
         return
 
+
+
 if __name__ == '__main__':
     create_folders()
     parse_arguments()
@@ -259,6 +259,4 @@ if __name__ == '__main__':
     socketio.run(app, host="0.0.0.0", port=5000, debug=debug_mode)
 
 # TODO: machen, dass wenn Datei nicht gefunden wird, nicht gesamter Server hängt, sondern nur in Browser angezeigt wird
-# TODO: bevorzugter Dateidownload von txt oder md Datein
-# TODO: Cookie Key randomizen
 # TODO: Progress anzeige während OCR Prozess
