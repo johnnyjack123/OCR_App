@@ -6,3 +6,5 @@ ocr-project-486618-6f64ecb974c7.json
 debug.log
 __pychache__/
 *.pyc
+sockets\__pychache__
+utils\__pychache__
