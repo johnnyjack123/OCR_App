@@ -7,9 +7,13 @@
   "users": [
     {
       "username": "joni",
-      "password_hash": "scrypt:32768:8:1$dWRezEQcjejo7QNK$85dacbb322e9aafdbb4f9cf5f6ca2c40f9bbec50e1fb5c8a1fadb1d42b2bc1ba3a6fe026776893fdbedf9f40e07b2bd4908a1bb9e0a2ef80a07982655f41d9f7",
+      "password_hash": "scrypt:32768:8:1$JSHGkZBa0aQS16Oc$debb6a202c615c1f2cdd6d4582462b281b3497ce2e521aed09665f47f5a0bb43de7b877f8b132cf44dc8d6b2c771fd69e474f17fc8c79a0667dce46398d4c436",
       "text_files": [
         "f54dea1b-0b4c-43f2-9d77-1dcd5622c965"
+      ],
+      "prefered_file": [
+        "md",
+        "txt"
       ]
     }
   ]

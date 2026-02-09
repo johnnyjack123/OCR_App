@@ -36,6 +36,7 @@ class User(BaseModel):
     username: str = ""
     password_hash: str = ""
     text_files: list = Field(default_factory=list)
+    prefered_file: list = ["txt", "md"]
 
 class Program(BaseModel):
     version: float = 0.1

@@ -9,13 +9,14 @@ global_variables.upload_folder_path = UPLOAD_DIR
 PROJECT_DIR = Path(__file__).resolve().parent
 global_variables.project_dir = PROJECT_DIR
 
-from flask import Flask, request, redirect, url_for, render_template, send_file, abort
+from flask import Flask, request, redirect, url_for, render_template, send_file, abort, jsonify
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_socketio import SocketIO, emit
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from utils.file_handler import load_and_migrate, UserStore, load_file, read_result, delete_result_file, save_file, edit_result
 from utils.check_env_variables import check_env_variables
+from utils.outsourced_functions import generate_hash
 from sockets.app_factory import create_app
 from sockets.extensions import socketio
 import argparse
@@ -175,11 +176,62 @@ def change_name():
     data = request.get_json(silent=True) or {}
     filename = data["filename"]
     new_title = data["new_title"]
+    
+    # If new_title is empty
+    if not new_title:
+        return redirect(url_for("dashboard"))
+
     result_file = read_result(filename)
     result_file["title"] = new_title
     edit_result(filename, result_file)
     send_document_history(username)
     return redirect(url_for("dashboard"))
+
+@app.route("/save_settings", methods=["POST"])
+@login_required
+def save_settings():
+    username = current_user.get_id()
+    data = request.get_json(silent=True) or {}
+    file = load_file()
+    password = data["password"]
+    confirm_password = data["confirm_password"]
+    prefered_file = data["prefered_file"]
+    for user in file.users:
+        if user.username == username:
+            if prefered_file in user.prefered_file:
+                user.prefered_file.remove(prefered_file)
+                user.prefered_file.insert(0, prefered_file)
+            if password and confirm_password:
+                if password == confirm_password:
+                    password_hash = generate_hash(password)
+                    user.password_hash = password_hash
+                    logger.info("Password changed.")
+                else:
+                    logger.error("No password match.")
+            save_file(file)
+    return redirect(url_for("dashboard"))
+
+@app.route("/api/prefered_file", methods=["GET"])
+@login_required
+def api_prefered_file():
+    print("API CAll")
+    found = False
+    username = current_user.get_id()
+    file = load_file()
+
+    for user in file.users:
+        if user.username == username:
+            prefered_file = user.prefered_file
+            found = True
+
+    if found:
+        print("found")
+        print(f"Array: {prefered_file}")
+        return jsonify({"prefered_file": prefered_file})
+    else:
+        print("not found")
+        return jsonify({"prefered_file": [False, False]})
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
@@ -208,3 +260,5 @@ if __name__ == '__main__':
 
 # TODO: machen, dass wenn Datei nicht gefunden wird, nicht gesamter Server hängt, sondern nur in Browser angezeigt wird
 # TODO: bevorzugter Dateidownload von txt oder md Datein
+# TODO: Cookie Key randomizen
+# TODO: Progress anzeige während OCR Prozess
