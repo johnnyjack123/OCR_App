@@ -39,7 +39,7 @@ class User(BaseModel):
     prefered_file: list = ["txt", "md"]
 
 class Program(BaseModel):
-    version: float = 0.1
+    version: float = 1.0
     api_renewal: str = ""
     cookie_key: str = ""
     llm_model: str = ""
