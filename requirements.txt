@@ -1,0 +1,8 @@
+flask
+flask-socketio
+flask-login
+werkzeug
+google-genai
+pillow
+google-cloud-vision
+requests

@@ -46,5 +46,5 @@ def send_document_history(username):
     socketio_push("document_history", file_content, username)
 
 def socketio_push(channel, message, username):
-    print(f"Socketio push to channel {channel}.")
+    print(f"Socketio push to channel {channel}. ")
     socketio.emit(channel, message, to=user_room(username))

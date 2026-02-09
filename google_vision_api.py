@@ -1,15 +1,12 @@
 from google.cloud import vision
-import argparse
 from pathlib import Path
 from PIL import Image
 import requests
 from utils.logger import logger
 from utils.file_handler import save_result, load_file
 from utils.parse_json import parse_llm_dict
-import json
-import ast
 from gemini import correct_with_gemini
-from sockets.sockets import send_document_history
+from sockets.sockets import send_document_history, socketio_push
 
 
 def extract_document_structure(annotation):
@@ -86,18 +83,19 @@ def verify_text(text): # Correct text with large language modell provided by LM 
     corrected = correct_with_gemini(text)
     return corrected
 
-def process_worker(in_path):
-    print(f"Performing OCR on document {in_path} to extract content.")
-    text = simple_ocr_google(str(in_path))
+def process_worker(task):
+    print(f"Performing OCR on document {task['file_path_img']} to extract content.")
+    text = simple_ocr_google(str(task['file_path_img']))
+    socketio_push("progress", "Successfully finished OCR-process. Try to verify with AI.", task["username"])
     print("Trying to verify and correct text with generative AI.")
     corrected_text = verify_text(text)
+    socketio_push("progress", "Successfully corrected text with AI.", task["username"])
     corrected_text_json = parse_llm_dict(corrected_text)
-    logger.info(f"corrected text: {corrected_text_json}")
     print("Success in correcting text.")
     return text, corrected_text_json
 
 def prepare_ocr_process(task):
-    text, corrected_text_json = process_worker(task["file_path_img"])
+    text, corrected_text_json = process_worker(task)
     logger.info(f"Process finished.")
     result = {
         "title": corrected_text_json["title"],

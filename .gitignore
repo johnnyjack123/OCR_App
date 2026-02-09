@@ -4,3 +4,5 @@ ocr-project-486618-6f64ecb974c7.json
 /results
 /uploads
 debug.log
+__pychache__/
+*.pyc

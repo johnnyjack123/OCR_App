@@ -142,8 +142,8 @@ def upload():
         filename = secure_filename(file.filename)  # niemals ungeprüfte Dateinamen nutzen [web:157]
         save_path = UPLOAD_DIR / filename
         file.save(save_path)  # speichert auf disk [web:157]
-        print("Received Image.")
         add_ocr_task(username, filename)
+    socketio_push("progress", "Image uploaded. Performing OCR.", username)
     return redirect(url_for("dashboard"))
 
 @app.route("/download/<path:filename>")

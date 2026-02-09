@@ -24,34 +24,53 @@ function add_download_button(filename) {
   return downloadBtn;
 }
 
-function add_delete_button() {
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "Delete"
-  deleteBtn.addEventListener("click", () => {
-    confirmDelete.showModal();
-  });
-  return deleteBtn;
-}
+let pendingDeleteFilename = null;
 
-function fill_delete_modal(filename) {
+function setupDeleteModal() {
   const confirmDelete = document.getElementById("confirmDelete");
   const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
   const abortConfirmDeleteBtn = document.getElementById("abortConfirmDeleteBtn");
 
-  confirmDeleteBtn.addEventListener("click", async () => {
+  confirmDeleteBtn.onclick = async () => {
+    if (!pendingDeleteFilename) return;
+
+    const filename = pendingDeleteFilename;
+    pendingDeleteFilename = null;
+
     const res = await fetch("/delete_document", {
       method: "POST",
       headers: { "Content-Type": "text/plain; charset=utf-8" },
       body: filename,
     });
-    if (!res.ok) throw new Error(await res.text());
-    confirmDelete.close()
-  });
 
-  abortConfirmDeleteBtn.addEventListener("click", () => confirmDelete.close());
+    if (!res.ok) throw new Error(await res.text());
+    confirmDelete.close();
+  };
+
+  abortConfirmDeleteBtn.onclick = () => {
+    pendingDeleteFilename = null;
+    confirmDelete.close();
+  };
 }
 
+function add_delete_button(filename) {
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.type = "button";
+
+  deleteBtn.addEventListener("click", () => {
+    pendingDeleteFilename = filename;
+    document.getElementById("confirmDelete").showModal();
+  });
+
+  return deleteBtn;
+}
+
+setupDeleteModal();
+
+
 function fillDocumentHistoryList(filename, content, title) {
+
   const li = document.createElement("li");
 
   const view_btn = add_view_button(title, content, filename);
@@ -62,11 +81,9 @@ function fillDocumentHistoryList(filename, content, title) {
 
   li.appendChild(downloadBtn)
 
-  const deleteBtn = add_delete_button();
+  const deleteBtn = add_delete_button(filename);
 
   li.appendChild(deleteBtn);
-
-  fill_delete_modal(filename)
 
   return li;
 }
@@ -75,17 +92,16 @@ export function createDocumentHistory(history) { // export to access function fr
   const ul = document.getElementById("documentHistory");
   ul.replaceChildren();
 
-  console.log("History:", history);
-
   for (const item of history) {
     const [[filename, content]] = Object.entries(item); 
-    console.log("filename:", filename);
-    console.log("content:", content);
-    console.log("keys:", content && typeof content === "object" ? Object.keys(content) : typeof content);
     const title = content.title ?? filename;
-    console.log("Title: " + title)
     const li = fillDocumentHistoryList(filename, content, title);
 
     ul.appendChild(li);
   }
+}
+
+export function updateProgress(msg){
+  const progress = document.getElementById("progress");
+  progress.innerHTML = msg;
 }
