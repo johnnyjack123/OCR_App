@@ -8,7 +8,10 @@ def add_user_dialog():
         if not username:
             print("Username empty.")
             continue
-        
+
+        if username == "exit": # Add some users until you set username to 'exit' followed by two presses on enter
+            break
+
         if any(u.username == username for u in file.users):
             print("Username already exists.")
             continue
@@ -27,7 +30,7 @@ def add_user_dialog():
             "password_hash": password
             }
         add_user(userdata)
-        break
+        print(f"Added user {username}")
     return
 
 def get_credentials_dialog():
