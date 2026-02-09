@@ -15,25 +15,27 @@ async function changeDocumentName(old_title, new_title, filename) {
 }
 
 export function documentView(content, title, filename) {
-  const preview = document.getElementById("preview");
   const popupPreview = document.getElementById("popupPreview");
-  const closePopupPreview = document.getElementById("closePopupPreview");
+  const closeBtn = document.getElementById("closePopupPreview");
   const input = document.getElementById("title");
+  const preview = document.getElementById("preview");
 
-  input.value = title
+  input.value = title;
 
-  closePopupPreview.onclick = async () => {
+  // render
+  marked.setOptions({ breaks: true });
+  preview.innerHTML = marked.parse(cleanUpMarkdown(String(content ?? "")));
+
+  // show bootstrap modal
+  const modal = bootstrap.Modal.getOrCreateInstance(popupPreview);
+  modal.show();
+
+  // your "close" action (optional rename then hide)
+  closeBtn.onclick = async () => {
     try {
       await changeDocumentName(title, input.value, filename);
-    } catch (e) {
-      console.error(e);
+    } finally {
+      modal.hide();
     }
-    popupPreview.close();
   };
-
-  marked.setOptions({ breaks: true });
-  const new_content = cleanUpMarkdown(content);
-  preview.innerHTML = marked.parse(new_content);
-
-  popupPreview.showModal();
 }

@@ -4,63 +4,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<body>
+<body class="bg-body-tertiary">
+    <main class="container py-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+            <div>
+                <h1 class="h4 mb-0">Dashboard</h1>
+                <div class="text-secondary small">Upload, preview, download, and manage documents</div>
+            </div>
 
-    <div id="dropzone" style="border:2px dashed #888; padding:20px;">
-        Hier Dateien oder Ordner reinziehen
+            <div class="d-flex gap-2">
+                <button id="viewSettings" class="btn btn-outline-secondary" type="button">Settings</button>
+                <a href="/logout" class="btn btn-outline-danger">Logout</a>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-body">
+                <div id="dropzone" class="dropzone">
+                    <div class="fw-semibold">Drop files or folders here</div>
+                    <div class="text-secondary small">Images are supported (image/*).</div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <button type="button" id="pick" class="btn btn-primary">Choose files…</button>
+                    <input id="fileInput" type="file" name="files" multiple accept="image/*" hidden>
+
+                    <button type="button" id="pickFolder" class="btn btn-outline-primary">Choose folder…</button>
+                    <input id="folderInput" type="file" name="files" webkitdirectory multiple hidden>
+                </div>
+
+                <div id="progress" class="small text-secondary mt-2"></div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <h2 class="h6 text-uppercase text-secondary mb-0">Document history</h2>
+        </div>
+
+        <!-- IMPORTANT: JS will fill this -->
+        <ul id="documentHistory" class="history-grid"></ul>
+    </main>
+
+    <!--Preview popup-->
+    <div class="modal fade" id="popupPreview" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input id="title" class="form-control mb-3" type="text" placeholder="Name of this document.">
+                    <div id="preview" class="border rounded p-2 bg-body-tertiary"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="closePopupPreview" type="button" class="btn btn-outline-secondary">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!--Delete popup-->
+    <div class="modal fade" id="confirmDelete" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Delete document?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-    <button type="button" id="pick">Dateien auswählen…</button>
-    <input id="fileInput" type="file" name="files" multiple accept="image/*" hidden>
+                <div class="modal-body">
+                    <p class="mb-0">Do you really want to delete this document? This action cannot be undone.</p>
+                </div>
 
-    <button type="button" id="pickFolder">Ordner auswählen…</button>
-    <input id="folderInput" type="file" name="files" webkitdirectory multiple hidden>
+                <div class="modal-footer">
+                    <button id="abortConfirmDeleteBtn" type="button" class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal">Cancel</button>
+                    <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <ul id="documentHistory"></ul>
-    <button id="viewSettings">Settings</button>
+    <!--Settings popup-->
+    <div class="modal fade" id="settings" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Settings</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-    <p id="progress"></p>
+                <div class="modal-body">
+                    <label class="form-label" for="password">New password</label>
+                    <input id="password" class="form-control" type="password" placeholder="Enter a new password">
 
-    <a href="/logout" class="btn">Logout</a>
+                    <label class="form-label mt-3" for="confirmPassword">Confirm password</label>
+                    <input id="confirmPassword" class="form-control" type="password"
+                        placeholder="Re-enter the new password">
 
+                    <div id="passwordMessage" class="text-danger small mt-2"></div>
 
-    <dialog id="popupPreview">
-        <input id="title" type="text" placeholder="Name of this document." />
-        <div id="preview"></div>
-        <button id="closePopupPreview">Close</button>
-    </dialog>
+                    <label class="form-label mt-3" for="preferedFile">Preferred file</label>
+                    <select id="preferedFile" class="form-select"></select>
+                </div>
 
-    <dialog id="confirmDelete">
-        <p>Do you really want to delete this document? This action cannot be undone.</p>
+                <div class="modal-footer">
+                    <button id="closeSettingsBtn" type="button" class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button id="saveSettings" type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <button id="confirmDeleteBtn">Delete</button>
-
-        <button id="abortConfirmDeleteBtn">Abort</button>
-    </dialog>
-
-    <dialog id="settings">
-        <input id="password" type="text" placeholder="Change your password" />
-        <input id="confirmPassword" type="text" placeholder="Confirm your password" />
-        <div id="passwordMessage" style="color: #c00;"></div>
-        <select id="preferedFile"></select>
-        <button id="saveSettings">Save</button>
-        <button id="closeSettings">Close</button>
-    </dialog>
-
-
-
-    <script type="module" src="../static/dashboard_script.js"></script>
-    <script type="module" src="../static/settings.js"></script>
-    <script type="module" src="../static/sockets.js"></script>
-    <script type="module" src="../static/upload.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+
+    <script type="module" src="{{ url_for('static', filename='dashboard_script.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='settings.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='sockets.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='upload.js') }}"></script>
 
 </body>
 

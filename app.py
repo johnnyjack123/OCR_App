@@ -119,11 +119,13 @@ def upload():
     files = request.files.getlist("files")
     if not files:
         return "No files", 400
-
+    count = 0
     for file in files:
-        filename = secure_filename(file.filename)  # niemals ungeprüfte Dateinamen nutzen [web:157]
+        count = count + 1
+        print(f"Count: {count}")
+        filename = secure_filename(file.filename)
         save_path = UPLOAD_DIR / filename
-        file.save(save_path)  # speichert auf disk [web:157]
+        file.save(save_path)
         add_ocr_task(username, filename)
     socketio_push("progress", "Image uploaded. Performing OCR.", username)
     return redirect(url_for("dashboard"))
