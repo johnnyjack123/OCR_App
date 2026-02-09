@@ -3,11 +3,15 @@ import { documentView } from "./document_view.js";
 function add_view_button(title, content, filename) {
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.textContent = title;
+  if (title == false) {
+    btn.textContent = "Missing document"
+  } else {
+    btn.textContent = title;
 
-  btn.addEventListener("click", () => {
-    documentView(content.content, title, filename)
-  });
+    btn.addEventListener("click", () => {
+      documentView(content.content, title, filename)
+    });
+  }
   return btn;
 }
 
@@ -72,19 +76,17 @@ setupDeleteModal();
 function fillDocumentHistoryList(filename, content, title) {
 
   const li = document.createElement("li");
+  const downloadBtn = add_download_button(filename)
 
   const view_btn = add_view_button(title, content, filename);
 
   li.appendChild(view_btn);
 
-  const downloadBtn = add_download_button(filename)
-
-  li.appendChild(downloadBtn)
-
+  if (title != false) {
+    li.appendChild(downloadBtn)
+  }
   const deleteBtn = add_delete_button(filename);
-
   li.appendChild(deleteBtn);
-
   return li;
 }
 
@@ -93,15 +95,15 @@ export function createDocumentHistory(history) { // export to access function fr
   ul.replaceChildren();
 
   for (const item of history) {
-    const [[filename, content]] = Object.entries(item); 
+    const [[filename, content]] = Object.entries(item);
     const title = content.title ?? filename;
     const li = fillDocumentHistoryList(filename, content, title);
-
     ul.appendChild(li);
   }
 }
 
-export function updateProgress(msg){
+
+export function updateProgress(msg) {
   const progress = document.getElementById("progress");
   progress.innerHTML = msg;
 }

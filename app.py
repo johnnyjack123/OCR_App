@@ -81,28 +81,7 @@ def logout():
 @app.route("/dashboard", methods=["GET"])
 @login_required
 def dashboard():
-    exists = False
-    username = current_user.get_id()
-    userdata = load_file()
-    file_access = None
-    for user in userdata.users:
-        if user.username == username:
-            exists = True
-            print("User found.")
-            file_access = user.text_files
-            break
-
-    if not exists:
-        logger.error("Username not found.")
-        return render_template("dashboard.html")
-    
-    file_content = []
-
-    if file_access:
-        for file in file_access:
-            file_content.append(read_result(file))
-    socketio_push("test", "test", username)
-    return render_template("dashboard.html", file_content=file_content)
+    return render_template("dashboard.html")
 
 @app.route("/add_task", methods=["POST"])
 @login_required
@@ -115,17 +94,17 @@ def add_task():
 def delete_document():
     username = current_user.get_id()
     file_name = request.get_data(as_text=True).strip()
-    print(f"Filename: {file_name}")
     file = load_file()
     for user in file.users:
         if user.username == username:
-            print("User found.")
             if file_name in user.text_files:
                user.text_files.remove(file_name)
-               print("Remove file from json.")
                save_file(file)
                break
-    delete_result_file(file_name)
+    try:
+        delete_result_file(file_name)
+    except Exception as e:
+        logger.error(f"Error in deleting file from disk: {e}")
     send_document_history(username)
     return redirect(url_for("dashboard"))
 
@@ -257,4 +236,3 @@ if __name__ == '__main__':
     socketio.run(app, host="0.0.0.0", port=5000, debug=debug_mode)
 
 # TODO: machen, dass wenn Datei nicht gefunden wird, nicht gesamter Server hängt, sondern nur in Browser angezeigt wird
-# TODO: Progress anzeige während OCR Prozess

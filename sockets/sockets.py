@@ -1,8 +1,9 @@
 from flask import request
 from flask_login import current_user
-from flask_socketio import SocketIO, emit, join_room, leave_room
+from flask_socketio import emit, join_room, leave_room
 from .extensions import socketio
 from utils.file_handler import load_file, read_result
+from utils.logger import logger
 
 def user_room(user_id: str) -> str:
     # stabiler Raumname pro User
@@ -41,8 +42,13 @@ def send_document_history(username):
             files = user.text_files
     if files != []:
         for file in files:
-            content = read_result(file)
-            file_content.append({file: content})
+            try:
+                content = read_result(file)
+                file_content.append({file: content})
+            except Exception as e:
+                logger.error(f"Missing file: {file}. Error: {e}")
+                content = {"title": False, "content": ""}
+                file_content.append({file: content})
     socketio_push("document_history", file_content, username)
 
 def socketio_push(channel, message, username):
