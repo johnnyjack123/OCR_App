@@ -9,6 +9,9 @@ global_variables.upload_folder_path = UPLOAD_DIR
 PROJECT_DIR = Path(__file__).resolve().parent
 global_variables.project_dir = PROJECT_DIR
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from flask import Flask, request, redirect, url_for, render_template, send_file, abort, jsonify
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_socketio import SocketIO, emit

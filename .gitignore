@@ -8,3 +8,4 @@ __pychache__/
 *.pyc
 sockets\__pychache__
 utils\__pychache__
+.env
